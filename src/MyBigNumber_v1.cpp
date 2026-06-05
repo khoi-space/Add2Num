@@ -5,7 +5,7 @@
 
 std::string MyBigNumber::sum(std::string stn1, std::string stn2) {
     #ifdef LOGGING
-    std::clog << "\n--- NEW LOGGING ---\n";
+    std::clog << "--- NEW LOGGING ---\n";
     std::clog << "Input: stn1 = " << stn1 << "; stn2 = " << stn2 << "\n";
     #endif
 
@@ -20,47 +20,45 @@ std::string MyBigNumber::sum(std::string stn1, std::string stn2) {
 
     std::string result = "";
 
-    // Pre-allocated memory to avoid multiple reallocations
-    size_t maxLen = std::max(stn1.length(), stn2.length()) + 1;
-    result.reserve(maxLen);
-
     int idxStn1 = stn1.length() - 1; //begin at the end of string number
     int idxStn2 = stn2.length() - 1;
 
     int carry = 0;
-    int digit1 = 0;
-    int digit2 = 0;
-    int localSum = 0;
-    int curResDigit = 0;
+    int step = 1;
 
-    for (int step = 1; idxStn1 >= 0 || idxStn2 >= 0 || carry > 0; --idxStn1, --idxStn2, ++step) {
+    while (idxStn1 >= 0 || idxStn2 >= 0 || carry > 0) {
         #ifdef LOGGING
         std::clog << "-> STEP " << step << ": ";
         #endif
 
-        digit1 = (idxStn1 >= 0) ? stn1[idxStn1] - '0' : 0; // Convert character at idxStn1 into digit
-        digit2 = (idxStn2 >= 0) ? stn2[idxStn2] - '0' : 0;
+        int digit1 = (idxStn1 >= 0) ? stn1[idxStn1] - '0' : 0; // Convert character at idxStn1 into digit
+        int digit2 = (idxStn2 >= 0) ? stn2[idxStn2] - '0' : 0;
 
-        localSum = digit1 + digit2 + carry;
+        int localSum = digit1 + digit2 + carry;
 
         #ifdef LOGGING
         std::clog << "Do " << digit1 << " + " << digit2 << " + " << carry << " (carry)" << " = " << localSum << ". ";
         #endif
 
         carry = localSum / 10;
-        curResDigit = localSum % 10;
-        result.push_back(curResDigit + '0'); // Use push_back to avoid temp string overhead 
+        int curResDigit = localSum % 10;
+        result += std::to_string(curResDigit);
 
         #ifdef LOGGING
         std::clog << "Write " << curResDigit << ". ";
         std::clog << "New carry: " << carry << '\n';
         #endif
+
+        --idxStn1;
+        --idxStn2;
+        ++step;
     }
 
     // Reserve order of character in result
     std::reverse(result.begin(), result.end());
 
     #ifdef LOGGING
+    std::clog << "Add done." << '\n';
     std::clog << "Final result: " << result << '\n';
     std::clog << "--------------------\n";
     #endif

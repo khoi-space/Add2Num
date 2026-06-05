@@ -3,8 +3,6 @@ A C++ implementation for adding two large numbers represented as strings. This p
 ## Project Structure
 ```text
 .
-├── build/                # Excecute and binary files
-│   └── main
 ├── include/
 │   ├── Config.h          # Global configuration macros
 │   └── MyBigNumber.h     # Class and method declarations
@@ -44,20 +42,28 @@ make run
 make test
 ```
 
-4. **Clean Workspace**: Delete the ```build/``` directory and remove all temporary binary files.
+4. **Run Coverage Test**
+```bash
+make coverage
+```
+
+_Notes_: A folder named "coverage_report" will be generated. Open the file index.html inside to see the detailed coverage report.
+
+5. **Clean Workspace**: Delete the ```build/``` directory and remove all temporary files.
 ```bash
 make clean
 ```
 
-## Configuration (LOGGING Toggle)
-You can manage the logging behavior by modifying the file [include/Config.h](include/Config.h):
-- To enable Logging feature: Keep the macro defined.
+## Configuration
+See file: [include/Config.h](include/Config.h)  
+To disable the feature: Comment out or remove the macro definition.
 
+### Manage the logging behavior
 ```C++
 #define LOGGING
 ```
 
-- To disable Logging feature: Comment out or remove the macro definition.
+### Enable stress test when testing units
 ```C++
-// define LOGGING
+#define STRESS_TEST
 ```

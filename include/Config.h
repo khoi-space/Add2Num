@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-//Comment this line to disable logging across the project
-#define LOGGING
+// #define LOGGING
+#define STRESS_TEST
 
 #endif // CONFIG_H
